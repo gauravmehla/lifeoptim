@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">lifeoptim</string>
+    <string name="txt_connect">Connect to a Google Calender</string>
+    <string name="connect">Connect</string>
+    <string name="upload">Upload</string>
+    <string name="btn_exit">X</string>
+
 </resources>
