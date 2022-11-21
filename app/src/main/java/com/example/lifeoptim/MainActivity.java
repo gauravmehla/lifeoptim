@@ -46,16 +46,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR }, 1234);
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
-        else if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED)
-        {
+        if (
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
 
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION }, 1234);
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+
+        }
+        else if(
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            /*
+            * Calendar Integration
+             */
             CalEvents calendars = new CalEvents(this);
             calendars.showCalendarIDs();
 
@@ -73,14 +82,33 @@ public class MainActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
+            //calendars.showCalendarIDs();
             //calendars.fetchCalEvents(14);
             //getCalendarEvents(this);
         }
 
+        /*
+        * Weather Integration
+         */
         try {
             WeatherAPI.get();
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        /*
+        * Location Integration
+         */
+        LocationService locS = new LocationService(this);
+
+        if(LocationService.isGPSEnabled()) {
+            Log.d(">>", "GPS is ON");
+            locS.getCurrentLocation();
+        } else {
+
+            LocationService.turnOnGPS();
+            Log.d(">>", "GPS is OFF");
         }
 
     }
