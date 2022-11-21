@@ -1,2 +1,5 @@
 # lifeoptim
-Life Optimising Personal Assistant
+Life Optimising Personal Assistan
+
+
+Members: Arunt
