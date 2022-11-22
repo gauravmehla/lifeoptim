@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical">
 
     <TextView
@@ -103,12 +104,36 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="#FFFFFF"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:shadowColor="#FFFFFF"
+        android:text="Roronoa Zoro"
         android:textColor="#FFFFFF"
-        android:textColorHint="#3E959595" />
+        android:textColorHint="#A8FFFFFF"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/desc4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Select calendar"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/spinner_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="50dp"
+        android:contentDescription="available calendars"
+        android:minHeight="48dp" />
 
     <ImageButton
         android:id="@+id/imageButton2"
