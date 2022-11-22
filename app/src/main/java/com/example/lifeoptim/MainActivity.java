@@ -9,6 +9,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.hardware.biometrics.BiometricManager;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 
@@ -113,4 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goTo(View view) {
+        Intent intent = new Intent(this, HomeScreen.class);
+        startActivity(intent);
+    }
 }

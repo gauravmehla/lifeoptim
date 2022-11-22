@@ -8,22 +8,10 @@
     android:padding="50sp"
     tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:layout_weight="1"
-        android:text="Start Location Updates" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
-        android:layout_weight="1"
-        android:text="Stop Location Updates" />
+        android:onClick="goTo"
+        android:text="Start Home Activity" />
 </LinearLayout>
