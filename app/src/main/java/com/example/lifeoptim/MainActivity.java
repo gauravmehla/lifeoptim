@@ -1,6 +1,7 @@
 package com.example.lifeoptim;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -13,13 +14,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.hardware.biometrics.BiometricManager;
-import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -36,7 +37,26 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+//import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+
+import java.util.concurrent.Executor;
+
 public class MainActivity extends AppCompatActivity {
+
+    androidx.biometric.BiometricPrompt biometricPrompt;
+    BiometricPrompt.PromptInfo promptInfo;
+    LinearLayout mMainLayout;
 
     public static ArrayList<String> nameOfEvent = new ArrayList<String>();
     public static ArrayList<String> startDates = new ArrayList<String>();
@@ -48,26 +68,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_event);
 
-        Biometric bio = new Biometric();
+        // Make sure we have permissions
+        if(permissionCheck()) {
 
-        if (
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION }, 1234);
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-
-        }
-        else if(
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        ) {
+            // Ask for biometric
+            biometricPrompt();
 
             /*
-            * Calendar Integration
+             * Calendar Integration
              */
             CalEvents calendars = new CalEvents(this);
             calendars.showCalendarIDs();
@@ -90,31 +98,97 @@ public class MainActivity extends AppCompatActivity {
             //calendars.showCalendarIDs();
             //calendars.fetchCalEvents(14);
             //getCalendarEvents(this);
-        }
 
-        /*
-        * Weather Integration
-         */
-        try {
-            WeatherAPI.get();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            /*
+             * Weather Integration
+             */
+            try {
+                WeatherAPI.get();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        /*
-        * Location Integration
-         */
-        LocationService locS = new LocationService(this);
+            /*
+             * Location Integration
+             */
+            LocationService locS = new LocationService(this);
 
-        if(LocationService.isGPSEnabled()) {
-            Log.d(">>", "GPS is ON");
-            locS.getCurrentLocation();
+            if(LocationService.isGPSEnabled()) {
+                Log.d(">>", "GPS is ON");
+                locS.getCurrentLocation();
+            } else {
+
+                LocationService.turnOnGPS();
+                Log.d(">>", "GPS is OFF");
+            }
+
         } else {
-
-            LocationService.turnOnGPS();
-            Log.d(">>", "GPS is OFF");
+            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private boolean permissionCheck() {
+
+        ActivityCompat.requestPermissions(MainActivity.this, new String[] {
+                Manifest.permission.READ_CALENDAR,
+                Manifest.permission.WRITE_CALENDAR,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        }, 1234);
+
+
+        if(
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void quitApplication() {
+        this.finishAffinity();
+    }
+
+    public void biometricPrompt() {
+        mMainLayout = findViewById(R.id.main_layout);
+
+        Executor executor = ContextCompat.getMainExecutor(this);
+
+        biometricPrompt = new BiometricPrompt(MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+
+                Toast.makeText(getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
+
+                quitApplication();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
+                //mMainLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        });
+
+        promptInfo= new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Life Optim")
+                .setDescription("Use FingerPrint to Login")
+                .setDeviceCredentialAllowed(true)
+                .build();
+
+
+        Log.d(">>", "Asking biometric");
+        biometricPrompt.authenticate(promptInfo);
     }
 
     public void goTo(View view) {
