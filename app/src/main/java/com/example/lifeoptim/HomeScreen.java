@@ -2,6 +2,7 @@ package com.example.lifeoptim;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,10 @@ public class HomeScreen extends AppCompatActivity {
         dbManager.open();
 
         // Default values in the database
+
         dbManager.insert("selectedCalendar", "");
+
+        getData();
 
         Spinner spinnerCalList = (Spinner)findViewById(R.id.spinner_calendar_list);
 
@@ -48,7 +52,6 @@ public class HomeScreen extends AppCompatActivity {
 
     public void addData(View v) {
 
-
         Spinner spinnerCalList = (Spinner)findViewById(R.id.spinner_calendar_list);
 
         String value = spinnerCalList.getSelectedItem().toString();
@@ -57,5 +60,33 @@ public class HomeScreen extends AppCompatActivity {
 
         dbManager.update("selectedCalendar", value);
         //dbManager.delete("selectedCalendar");
+    }
+
+    // Currently implementing
+    public String getData() {
+        String result = "";
+        Cursor c = dbManager.fetch();
+        if (c != null) {
+            c.moveToFirst();
+            while(true) {
+                if(
+                        c.getString(1).equals("selectedCalendar") &&
+                        !c.getString(2).equals("")
+                ) {
+                    // Present
+                    result = c.getString(2);
+                } else {
+                    // Absent
+                    dbManager.insert("selectedCalendar", "");
+                }
+
+                if(c.isLast()) {
+                    break;
+                } else {
+                    c.moveToNext();
+                }
+            }
+        }
+        return result;
     }
 }

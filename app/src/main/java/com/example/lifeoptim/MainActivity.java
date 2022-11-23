@@ -77,23 +77,23 @@ public class MainActivity extends AppCompatActivity {
             /*
              * Calendar Integration
              */
-            CalEvents calendars = new CalEvents(this);
-            calendars.showCalendarIDs();
-
-            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            df.setTimeZone(TimeZone.getTimeZone("America/Vancouver"));
-            try {
-                String day = "2022-11-20";
-                Long stTimestamp = df.parse(day + "T00:00:00.000").getTime();
-                Long endTimestamp = df.parse(day + "T23:59:59.999").getTime();
-
-                Log.d("->", stTimestamp + " - " + endTimestamp);
-
-                calendars.fetchCalEvents(17, stTimestamp, endTimestamp);
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            CalEvents calendars = new CalEvents(this);
+//            calendars.showCalendarIDs();
+//
+//            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//            df.setTimeZone(TimeZone.getTimeZone("America/Vancouver"));
+//            try {
+//                String day = "2022-11-20";
+//                Long stTimestamp = df.parse(day + "T00:00:00.000").getTime();
+//                Long endTimestamp = df.parse(day + "T23:59:59.999").getTime();
+//
+//                Log.d("->", stTimestamp + " - " + endTimestamp);
+//
+//                calendars.fetchCalEvents(17, stTimestamp, endTimestamp);
+//
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 
             //calendars.showCalendarIDs();
             //calendars.fetchCalEvents(14);
@@ -102,25 +102,25 @@ public class MainActivity extends AppCompatActivity {
             /*
              * Weather Integration
              */
-            try {
-                WeatherAPI.get();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                WeatherAPI.get();
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
             /*
              * Location Integration
              */
-            LocationService locS = new LocationService(this);
-
-            if(LocationService.isGPSEnabled()) {
-                Log.d(">>", "GPS is ON");
-                locS.getCurrentLocation();
-            } else {
-
-                LocationService.turnOnGPS();
-                Log.d(">>", "GPS is OFF");
-            }
+//            LocationService locS = new LocationService(this);
+//
+//            if(LocationService.isGPSEnabled()) {
+//                Log.d(">>", "GPS is ON");
+//                locS.getCurrentLocation();
+//            } else {
+//
+//                LocationService.turnOnGPS();
+//                Log.d(">>", "GPS is OFF");
+//            }
 
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -171,7 +171,11 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
-                //mMainLayout.setVisibility(View.VISIBLE);
+
+
+                // Proceed to Home Activity
+                goTo();
+
             }
 
             @Override
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         biometricPrompt.authenticate(promptInfo);
     }
 
-    public void goTo(View view) {
+    public void goTo() {
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
     }
