@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_event);
+        setContentView(R.layout.layout_authentication_page);
 
         // Make sure we have permissions
         if(permissionCheck()) {
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             /*
              * Calendar Integration
              */
-//            CalEvents calendars = new CalEvents(this);
+            CalEvents calendars = new CalEvents(this);
 //            calendars.showCalendarIDs();
 //
 //            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 
             //calendars.showCalendarIDs();
-            //calendars.fetchCalEvents(14);
+            calendars.fetchCalendars();
             //getCalendarEvents(this);
 
             /*

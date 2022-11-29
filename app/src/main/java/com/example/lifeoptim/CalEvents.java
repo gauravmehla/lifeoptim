@@ -96,7 +96,7 @@ public class CalEvents {
 
     }
 
-    public void showCalendarIDs() {
+    public static void showCalendarIDs() {
         for(String calID: calendarsList.keySet()) {
             HashMap<String, String> cal = calendarsList.get(calID);
 
