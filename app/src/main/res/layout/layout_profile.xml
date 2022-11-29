@@ -112,6 +112,7 @@
             android:layout_height="87dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home button"
+            android:onClick="goHome"
             android:scaleX="0.5"
             android:scaleY="0.5"
             app:srcCompat="@drawable/home_button" />
@@ -120,6 +121,7 @@
             android:id="@+id/btn_profile"
             android:layout_width="112dp"
             android:layout_height="87dp"
+            android:alpha="0.5"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="profile button"
             android:scaleX="0.5"

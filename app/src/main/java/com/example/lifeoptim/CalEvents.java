@@ -53,7 +53,13 @@ public class CalEvents {
         }
     }
 
-    public void fetchCalEvents(int calID, long stTime, long endTime) {
+    public ArrayList<ArrayList<String>> fetchCalEvents(int calID, long stTime, long endTime) {
+        ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
+        ArrayList<String> events_title = new ArrayList<String>();
+        ArrayList<String> events_start = new ArrayList<String>();
+        ArrayList<String> events_end = new ArrayList<String>();
+        ArrayList<String> events_loc = new ArrayList<String>();
+
         Cursor cursor = this.context.getContentResolver()
                 .query(
                         Uri.parse("content://com.android.calendar/events"),
@@ -83,17 +89,28 @@ public class CalEvents {
                     Long.parseLong( cursor.getString(3) ) > stTime &&
                     Long.parseLong( cursor.getString(4) ) < endTime
             ) {
-                Log.d("-> here", " 0" + cursor.getString(0));
-                Log.d("-> here", " 1" + cursor.getString(1));
-                Log.d("-> here", " 2" + cursor.getString(2));
+                Log.d("-> here", " 0 " + cursor.getString(0));
+                Log.d("-> here", " 1 " + cursor.getString(1));
+                Log.d("-> here", " 2 " + cursor.getString(2));
 
-                Log.d("-> here", " 3" + getDate(cursor.getLong(3), this.DATE_FORMAT));
-                Log.d("-> here", " 4" + getDate(cursor.getLong(4), this.DATE_FORMAT));
-                Log.d("-> here", " 5" + cursor.getString(5));
+                Log.d("-> here", " 3 " + getDate(cursor.getLong(3), this.DATE_FORMAT));
+                Log.d("-> here", " 4 " + getDate(cursor.getLong(4), this.DATE_FORMAT));
+                Log.d("-> here", " 5 " + cursor.getString(5));
+
+                events_title.add(cursor.getString(1));
+                events_start.add(getDate(cursor.getLong(3), this.DATE_FORMAT));
+                events_end.add(getDate(cursor.getLong(4), this.DATE_FORMAT));
+                events_loc.add(cursor.getString(5));
             }
             cursor.moveToNext();
         }
 
+        events.add(events_title);
+        events.add(events_loc);
+        events.add(events_start);
+        events.add(events_end);
+
+        return events;
     }
 
     public static void showCalendarIDs() {

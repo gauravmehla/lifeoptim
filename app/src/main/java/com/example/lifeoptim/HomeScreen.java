@@ -1,7 +1,10 @@
 package com.example.lifeoptim;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +19,15 @@ import java.util.HashMap;
 public class HomeScreen extends AppCompatActivity {
 
     private DBManager dbManager;
+    private ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
+
+    public ArrayList<ArrayList<String>> getEvents() {
+        return events;
+    }
+
+    public void setEvents(ArrayList<ArrayList<String>> events) {
+        this.events = events;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +65,36 @@ public class HomeScreen extends AppCompatActivity {
             ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, personName);
             spinnerCalList.setAdapter(arrayAdapter);
 
-
-
-
         } else {
             // Calendar is selected
             Log.d("==>", "Proceeeed");
 
-
             setContentView(R.layout.layout_home);
+
+            CalEvents Cal = new CalEvents(this);
+
+            setEvents(Cal.fetchCalEvents(5,1669697737310L,1672390800000L));
+            Log.d("-event->","dsd");
+            for(int i = 0 ; i < events.size(); ++i){
+                if(i == 0){
+                    for(int j = 0 ; j < events.get(i).size(); ++j){
+                        Log.d("#event ", events.get(i).get(j));
+                    }
+                }
+                if(i == 1){
+                    for(int j = 0 ; j < events.get(i).size(); ++j){
+                        Log.d("#loc ", events.get(i).get(j));
+                    }
+                }
+            }
+
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rView);
+            PlaceEvent adapter = new PlaceEvent(events);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+
+
         }
 
     }
@@ -111,5 +144,15 @@ public class HomeScreen extends AppCompatActivity {
 
         }
         return keyValue;
+    }
+
+    public void goHome(View V){
+        Intent intent = new Intent(this, HomeScreen.class);
+        startActivity(intent);
+//        setContentView(R.layout.layout_home);
+    }
+    public void goProfile(View V){
+        setContentView(R.layout.layout_profile);
+
     }
 }
