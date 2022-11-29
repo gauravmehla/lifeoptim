@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
@@ -29,25 +30,34 @@
         android:text="_" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_today"
-            android:layout_width="286dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
+            android:background="#03030303"
             android:backgroundTint="#020202"
+            android:backgroundTintMode="src_over"
             android:text="TODAY"
-            android:textSize="20sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:iconTint="#222222"
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/date_picker"
             android:layout_width="79dp"
-            android:layout_height="61dp"
+            android:layout_height="80dp"
+            android:contentDescription="Select Date"
+            android:onClick="goProfile"
             android:scaleX="0.5"
             android:scaleY="0.5"
             app:srcCompat="@drawable/date_picker" />
@@ -65,7 +75,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="500dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -79,6 +89,7 @@
             android:id="@+id/btn_home"
             android:layout_width="98dp"
             android:layout_height="87dp"
+            android:alpha="0.5"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home button"
             android:scaleX="0.5"
@@ -91,6 +102,7 @@
             android:layout_height="87dp"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="profile button"
+            android:onClick="goProfile"
             android:scaleX="0.5"
             android:scaleY="0.5"
             app:srcCompat="@drawable/profile_button" />
