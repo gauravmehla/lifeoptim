@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
-    private ArrayList<ArrayList<String>> event_data = new ArrayList<ArrayList<String>>();
+    public static ArrayList<ArrayList<String>> event_data = new ArrayList<ArrayList<String>>();
 
 
     // constructor
@@ -53,9 +53,18 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        Log.d("#23 - 0", position + "");
+        Log.d("#23 - -1", event_data.size() + "");
+        Log.d("#23 - 0", event_data.get(0).get(position));
         String event_title = event_data.get(0).get(position);
+
+        Log.d("#23 - 2", event_data.get(2).get(position));
         String event_start = event_data.get(2).get(position);
+
+        Log.d("#23 - 3", event_data.get(3).get(position));
         String event_end = event_data.get(3).get(position);
+
+        Log.d("#23 - 1", event_data.get(1).get(position));
         String event_loc = event_data.get(1).get(position);
 //        String event_title = event.get(0);
 //        String event_start = event.get(2);
@@ -76,7 +85,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return event_data.size();
+        return event_data.get(0).size();
     }
 
 }

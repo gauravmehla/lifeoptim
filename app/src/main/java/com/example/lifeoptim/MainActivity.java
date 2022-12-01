@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if(permissionCheck()) {
 
             // Ask for biometric
-            biometricPrompt();
+            // biometricPrompt();
 
             /*
              * Calendar Integration
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 
-            //calendars.showCalendarIDs();
+            calendars.showCalendarIDs();
             calendars.fetchCalendars();
             //getCalendarEvents(this);
 
@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
 //                LocationService.turnOnGPS();
 //                Log.d(">>", "GPS is OFF");
 //            }
+
+            goTo();
 
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();

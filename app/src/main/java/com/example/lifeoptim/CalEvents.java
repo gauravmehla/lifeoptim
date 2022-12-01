@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class CalEvents {
     static Context context;
-    static String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss.SSS";
+    public static String DATE_FORMAT = "dd/MM/yyyy hh:mm:ss.SSS";
     static HashMap<String, HashMap> calendarsList=new HashMap<String, HashMap>();
 
     CalEvents(Context c) {
@@ -74,14 +74,13 @@ public class CalEvents {
                         }, null,null, CalendarContract.Events.DTSTART + " ASC");
         cursor.moveToFirst();
 
-        String eventsList[] = new String[cursor.getCount()];
-
+        Log.d("Yoho cursor count - ", cursor.getCount() + "");
 
         Log.d("-> st timestamp", getDate(stTime, "dd/MM/yyyy hh:mm:ss.SSS"));
         Log.d("-> end timestamp", getDate(endTime, "dd/MM/yyyy hh:mm:ss.SSS"));
 
-        for (int i = 0; i < eventsList.length; i++) {
-
+        for (int i = 0; i < cursor.getCount(); i++) {
+            // Code Break if no events
             if(
                     cursor.getString(3) != null &&
                     cursor.getString(4) != null &&
@@ -105,12 +104,24 @@ public class CalEvents {
             cursor.moveToNext();
         }
 
+        Log.d("Yoho events_title count - ", events_title.size() + "");
+        Log.d("Yoho events_loc count - ", events_loc.size() + "");
+        Log.d("Yoho events_start count - ", events_start.size() + "");
+        Log.d("Yoho events_end count - ", events_end.size() + "");
+
         events.add(events_title);
         events.add(events_loc);
         events.add(events_start);
         events.add(events_end);
 
         return events;
+    }
+
+    public static String getCalendarID(String calendar) {
+        String calID = "";
+
+
+        return calID;
     }
 
     public static void showCalendarIDs() {
@@ -137,4 +148,17 @@ public class CalEvents {
         return formatter.format(calendar.getTime());
     }
 
+    public long getDayStartTimestampInMilli(int year, int month, int day) {
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.set(year, month, day,
+                00, 00, 00);
+        return tempCal.getTimeInMillis();
+    }
+
+    public long getDayEndTimestampInMilli(int year, int month, int day) {
+        Calendar tempCal = Calendar.getInstance();
+        tempCal.set(year, month, day,
+                23, 59, 59);
+        return tempCal.getTimeInMillis();
+    }
 }

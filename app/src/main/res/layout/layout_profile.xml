@@ -60,6 +60,7 @@
         android:backgroundTint="#E33C3C"
         android:elevation="5dp"
         android:fadeScrollbars="false"
+        android:onClick="destroySession"
         android:text="disconnect"
         android:textSize="19sp"
         app:cornerRadius="25dp" />
