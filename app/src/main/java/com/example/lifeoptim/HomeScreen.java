@@ -287,4 +287,16 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void changeDateToToday(View v) {
+        selectedDay = c.get(Calendar.DAY_OF_MONTH);
+        selectedMonth = c.get(Calendar.MONTH);
+        selectedYear = c.get(Calendar.YEAR);
+
+        long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+        long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+
+        PlaceEvent.event_data = Cal.fetchCalEvents(calendarID,startTime,endTime);
+        adapter.notifyDataSetChanged();
+    }
+
 }

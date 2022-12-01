@@ -44,6 +44,7 @@
             android:background="#03030303"
             android:backgroundTint="#020202"
             android:backgroundTintMode="src_over"
+            android:onClick="changeDateToToday"
             android:text="TODAY"
             android:textColor="#FFFFFF"
             android:textSize="20dp"
