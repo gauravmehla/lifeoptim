@@ -17,7 +17,7 @@
         android:outlineSpotShadowColor="#FFFFFF"
         android:scaleX="1.2"
         android:scaleY="1.2"
-        android:text="About Us"
+        android:text="Welcome"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold"
