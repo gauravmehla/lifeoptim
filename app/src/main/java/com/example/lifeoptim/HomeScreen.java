@@ -162,8 +162,6 @@ public class HomeScreen extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
-
-
         }
 
     }
@@ -189,6 +187,8 @@ public class HomeScreen extends AppCompatActivity {
         // Update the text on home screen
         TextView welcomeUser = findViewById(R.id.text_welcome_user2);
         welcomeUser.setText("Hello, " + username);
+
+        adapter.notifyDataSetChanged();
 
 
     }
