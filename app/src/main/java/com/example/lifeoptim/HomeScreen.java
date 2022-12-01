@@ -25,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         dbManager.open();
 
 
-        // dbManager.delete("selectedCalendar");
+        dbManager.delete("selectedCalendar");
 
         // Default values in the database
 
