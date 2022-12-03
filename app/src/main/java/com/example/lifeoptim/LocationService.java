@@ -29,9 +29,9 @@ public class LocationService extends AppCompatActivity implements LocationListen
     private static Context c;
     private static LocationManager locationManager;
     private static LocationListener locationListener;
-    private static List<Address> address;
-    private static double lat;
-    private static double lon;
+    public static List<Address> address;
+    public static double lat;
+    public static double lon;
 
     LocationService(Context c) {
         this.c = c;
@@ -50,9 +50,9 @@ public class LocationService extends AppCompatActivity implements LocationListen
 
                 address = geocoder.getFromLocation(lat, lon, 1);
 
-                Log.d(">>", "lat :" + lat);
-                Log.d(">>", "long :" + lon);
-                Log.d(">>", "address :" + address.get(0).getAddressLine(0));
+                // Log.d(">>", "lat :" + lat);
+                // Log.d(">>", "long :" + lon);
+                // Log.d(">>", "address :" + address.get(0).getAddressLine(0));
             }
         }
         catch(SecurityException | IOException e) {
@@ -60,9 +60,10 @@ public class LocationService extends AppCompatActivity implements LocationListen
         }
     }
 
-    public void getCurrentLocation() {
-        Log.d(">> Current Location: ", this.lat + ", " + this.lon);
-        Log.d(">> Current Address", address.get(0).getAddressLine(0));
+    public String getCurrentLocation() {
+        // Log.d(">> Current Location: ", this.lat + ", " + this.lon);
+        // Log.d(">> Current Address", address.get(0).getAddressLine(0));
+        return address.get(0).getAddressLine(0);
     }
 
     public static boolean isGPSEnabled() {

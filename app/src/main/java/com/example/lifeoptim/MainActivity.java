@@ -108,20 +108,6 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 
-            /*
-             * Location Integration
-             */
-//            LocationService locS = new LocationService(this);
-//
-//            if(LocationService.isGPSEnabled()) {
-//                Log.d(">>", "GPS is ON");
-//                locS.getCurrentLocation();
-//            } else {
-//
-//                LocationService.turnOnGPS();
-//                Log.d(">>", "GPS is OFF");
-//            }
-
             goTo();
 
         } else {

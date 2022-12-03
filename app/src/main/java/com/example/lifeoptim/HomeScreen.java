@@ -52,6 +52,8 @@ public class HomeScreen extends AppCompatActivity {
 
     public static String DATE_FORMAT = "EEE - MMM d, yyyy";
 
+    LocationService locS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,7 @@ public class HomeScreen extends AppCompatActivity {
         selectedMonth = c.get(Calendar.MONTH);
         selectedYear = c.get(Calendar.YEAR);
 
+        locS = new LocationService(this);
 
         // Default values in the database
 
@@ -100,7 +103,6 @@ public class HomeScreen extends AppCompatActivity {
 
             // Update date
             formatCurrentDate();
-
 
             /* Calendar */
             ImageView datePicker = findViewById(R.id.date_picker);
@@ -271,6 +273,11 @@ public class HomeScreen extends AppCompatActivity {
         String connectedGmail = getData("selectedCalendar");
         TextView selectedMail = findViewById(R.id.text_connected_gmail);
         selectedMail.setText(connectedGmail);
+
+        if(LocationService.isGPSEnabled()) {
+            TextView currentLoc = findViewById(R.id.currentLocation);
+            currentLoc.setText(locS.getCurrentLocation());
+        }
     }
 
     public String getData(String param) {
