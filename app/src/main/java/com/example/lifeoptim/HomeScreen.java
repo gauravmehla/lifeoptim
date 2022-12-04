@@ -18,8 +18,11 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class HomeScreen extends AppCompatActivity {
@@ -41,10 +44,15 @@ public class HomeScreen extends AppCompatActivity {
     public static int selectedDay;
     public static int selectedMonth;
     public static int selectedYear;
+
     CalEvents Cal;
     int calendarID = 0;
 
     PlaceEvent adapter;
+
+    public static String DATE_FORMAT = "EEE - MMM d, yyyy";
+
+    LocationService locS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class HomeScreen extends AppCompatActivity {
         selectedMonth = c.get(Calendar.MONTH);
         selectedYear = c.get(Calendar.YEAR);
 
+        locS = new LocationService(this);
 
         // Default values in the database
 
@@ -92,6 +101,9 @@ public class HomeScreen extends AppCompatActivity {
             Log.d("==>", "Proceeeed");
             setContentView(R.layout.layout_home);
 
+            // Update date
+            formatCurrentDate();
+
             /* Calendar */
             ImageView datePicker = findViewById(R.id.date_picker);
 
@@ -111,6 +123,9 @@ public class HomeScreen extends AppCompatActivity {
 
                             PlaceEvent.event_data = Cal.fetchCalEvents(calendarID,startTime,endTime);
                             adapter.notifyDataSetChanged();
+
+                            // Update date
+                            formatCurrentDate();
                         }
                     }, selectedYear, selectedMonth, selectedDay);
 
@@ -164,6 +179,15 @@ public class HomeScreen extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
         }
 
+    }
+
+    private void formatCurrentDate() {
+        TextView currentDate = findViewById(R.id.current_date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(selectedYear, selectedMonth, selectedDay);
+        Date date = calendar.getTime();
+        String formattedDate = new SimpleDateFormat(DATE_FORMAT).format(date);
+        currentDate.setText(formattedDate.toString());
     }
 
     public void addData(View v) {
@@ -249,6 +273,11 @@ public class HomeScreen extends AppCompatActivity {
         String connectedGmail = getData("selectedCalendar");
         TextView selectedMail = findViewById(R.id.text_connected_gmail);
         selectedMail.setText(connectedGmail);
+
+        if(LocationService.isGPSEnabled()) {
+            TextView currentLoc = findViewById(R.id.currentLocation);
+            currentLoc.setText(locS.getCurrentLocation());
+        }
     }
 
     public String getData(String param) {
@@ -297,6 +326,9 @@ public class HomeScreen extends AppCompatActivity {
 
         PlaceEvent.event_data = Cal.fetchCalEvents(calendarID,startTime,endTime);
         adapter.notifyDataSetChanged();
+
+        // Update date
+        formatCurrentDate();
     }
 
 }

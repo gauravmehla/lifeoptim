@@ -22,8 +22,12 @@
         <entry key="..\:/Users/300351832/Desktop/folder/lifeoptim/app/src/main/res/layout/layout_connect_calendar.xml" value="0.2515625" />
         <entry key="..\:/Users/300351832/Desktop/folder/lifeoptim/app/src/main/res/layout/layout_event.xml" value="0.33" />
         <entry key="..\:/Users/300351832/Desktop/folder/lifeoptim/app/src/main/res/layout/layout_home.xml" value="0.29259259259259257" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.16530797101449277" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_about_us.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/layout/layout_home.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/layout/layout_profile.xml" value="0.19427083333333334" />
       </map>
     </option>
   </component>
