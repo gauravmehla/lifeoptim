@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,12 +19,19 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -71,11 +79,14 @@ public class HomeScreen extends AppCompatActivity {
         locS = new LocationService(this);
 
         // Default values in the database
+//        dbManager.delete("selectedCalendar");
+
 
 
         if(initializeDatabase().equals("")) {
 
             setContentView(R.layout.layout_about_us);
+            Log.d("=-=> Initializing Database^", "");
 
             Spinner spinnerCalList = (Spinner)findViewById(R.id.spinner_calendar);
             ArrayList<String> personName = new ArrayList<String>();
@@ -98,41 +109,11 @@ public class HomeScreen extends AppCompatActivity {
 
         } else {
             // Calendar is selected
-            Log.d("==>", "Proceeeed");
+            Log.d("=-=>", "Proceeeed");
             setContentView(R.layout.layout_home);
 
             // Update date
             formatCurrentDate();
-
-            /* Calendar */
-            ImageView datePicker = findViewById(R.id.date_picker);
-
-            datePicker.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    dpd = new DatePickerDialog(HomeScreen.this, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                            selectedYear = year;
-                            selectedMonth = month;
-                            selectedDay = day;
-
-                            long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
-                            long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
-
-                            PlaceEvent.event_data = Cal.fetchCalEvents(calendarID,startTime,endTime);
-                            adapter.notifyDataSetChanged();
-
-                            // Update date
-                            formatCurrentDate();
-                        }
-                    }, selectedYear, selectedMonth, selectedDay);
-
-                    dpd.show();
-                }
-            });
-
             // Update the text on home screen
             String username = getData("currentUser");
             TextView welcomeUser = findViewById(R.id.text_welcome_user2);
@@ -156,7 +137,11 @@ public class HomeScreen extends AppCompatActivity {
             long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
             long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
 
-            setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
+            try {
+                setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
             Log.d("-event->","dsd");
             for(int i = 0 ; i < events.size(); ++i){
@@ -177,8 +162,39 @@ public class HomeScreen extends AppCompatActivity {
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
+            /* Calendar */
+
         }
 
+    }
+
+    public void onClickDate(View V){
+
+        dpd = new DatePickerDialog(HomeScreen.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                selectedYear = year;
+                selectedMonth = month;
+                selectedDay = day;
+
+                long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+                long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+
+//                setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
+                try {
+                    PlaceEvent.event_data = Cal.fetchCalEvents(calendarID,startTime,endTime);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                adapter.notifyDataSetChanged();
+
+                // Update date
+                formatCurrentDate();
+
+            }
+        }, selectedYear, selectedMonth, selectedDay);
+
+        dpd.show();
     }
 
     private void formatCurrentDate() {
@@ -253,15 +269,9 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void goHome(View V){
-        // Update the text on home screen
-        String username = getData("currentUser");
-        TextView welcomeUser = findViewById(R.id.text_welcome_user2);
-        Log.d("=> uname ", username);
-        welcomeUser.setText("Hello, " + username);
 
-        // Intent intent = new Intent(this, HomeScreen.class);
-        // startActivity(intent);
-        setContentView(R.layout.layout_home);
+        finish();
+        startActivity(getIntent());
     }
     public void goProfile(View V){
         setContentView(R.layout.layout_profile);
@@ -281,7 +291,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public String getData(String param) {
-        String result = "";
+        String result = "blank";
         // move this to a RecyclerView
         Cursor c = dbManager.fetch();
         if (c != null) {
@@ -316,7 +326,7 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void changeDateToToday(View v) {
+    public void changeDateToToday(View v) throws JSONException {
         selectedDay = c.get(Calendar.DAY_OF_MONTH);
         selectedMonth = c.get(Calendar.MONTH);
         selectedYear = c.get(Calendar.YEAR);
@@ -330,5 +340,7 @@ public class HomeScreen extends AppCompatActivity {
         // Update date
         formatCurrentDate();
     }
+
+
 
 }
