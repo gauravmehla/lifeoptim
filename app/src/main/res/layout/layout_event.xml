@@ -21,7 +21,7 @@
         android:shadowColor="#DC3232"
         android:shadowDx="10"
         android:shadowDy="10"
-        android:shadowRadius="10"
+        android:shadowRadius="12"
         android:text="Alert"
         android:textColor="#EF0505"
         android:textSize="20sp"

@@ -3,6 +3,7 @@ package com.example.lifeoptim;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
+
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,8 +13,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.location.LocationRequest;
@@ -22,7 +25,10 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
 public class LocationService extends AppCompatActivity implements LocationListener {
@@ -116,5 +122,26 @@ public class LocationService extends AppCompatActivity implements LocationListen
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    public String[] getCoordinates(String address){
+        Geocoder geocoder = new Geocoder(c,Locale.getDefault());
+        String coordinates[] = new String[2];
+
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(address,1);
+            if(null!=addressList && addressList.size()>0){
+                String _Location = addressList.get(0).getAddressLine(0);
+                coordinates[0] = addressList.get(0).getLatitude() + "";
+                coordinates[1] = addressList.get(0).getLongitude() + "";
+                Log.d("---<>>",coordinates[0] + " " + coordinates[1] + " " + _Location);
+            }
+
+        }catch(Exception e){
+            Log.d("---<>>","error" + address);
+            e.printStackTrace();
+        }
+        return coordinates;
     }
 }

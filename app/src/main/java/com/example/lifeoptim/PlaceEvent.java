@@ -59,7 +59,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
         Log.d("#suggestions", "" + event_data.get(4).get(position) + position);
 
         if(!event_data.get(4).get(position).isEmpty()){
-            suggestion = event_data.get(4).get(0);
+            suggestion = event_data.get(4).get(position);
             holder.event_suggestion.setVisibility(View.VISIBLE);
             flag = 1;
         }
