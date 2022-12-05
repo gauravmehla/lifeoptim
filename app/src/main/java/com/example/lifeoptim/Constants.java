@@ -6,4 +6,5 @@ class Constants {
     static final String ACTION_STOP_LOCATION_SERVICE = "stopLocationService";
 
     static final String DATABASE_NAME = "lifeoptim";
+    static final String HOME_SCREEN_DATE_FORMAT = "EEE - MMM d, yyyy";
 }

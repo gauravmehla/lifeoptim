@@ -55,10 +55,6 @@ public class LocationService extends AppCompatActivity implements LocationListen
                 lon = location.getLongitude();
 
                 address = geocoder.getFromLocation(lat, lon, 1);
-
-                // Log.d(">>", "lat :" + lat);
-                // Log.d(">>", "long :" + lon);
-                // Log.d(">>", "address :" + address.get(0).getAddressLine(0));
             }
         }
         catch(SecurityException | IOException e) {
@@ -67,23 +63,13 @@ public class LocationService extends AppCompatActivity implements LocationListen
     }
 
     public String getCurrentLocation() {
-        // Log.d(">> Current Location: ", this.lat + ", " + this.lon);
-        // Log.d(">> Current Address", address.get(0).getAddressLine(0));
         return address.get(0).getAddressLine(0);
     }
 
     public static boolean isGPSEnabled() {
         locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
         boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        Log.d("->", isEnabled + "");
         return isEnabled;
-    }
-
-    public static void turnOnGPS() {
-
-        Log.d(">>", "Enabling GPS");
-
-
     }
 
     @Override
@@ -128,18 +114,15 @@ public class LocationService extends AppCompatActivity implements LocationListen
         Geocoder geocoder = new Geocoder(c,Locale.getDefault());
         String coordinates[] = new String[2];
 
-        List<Address> addressList;
         try {
-            addressList = geocoder.getFromLocationName(address,1);
+            List<Address> addressList = geocoder.getFromLocationName(address,1);
             if(null!=addressList && addressList.size()>0){
                 String _Location = addressList.get(0).getAddressLine(0);
                 coordinates[0] = addressList.get(0).getLatitude() + "";
                 coordinates[1] = addressList.get(0).getLongitude() + "";
-                Log.d("---<>>",coordinates[0] + " " + coordinates[1] + " " + _Location);
             }
 
         }catch(Exception e){
-            Log.d("---<>>","error" + address);
             e.printStackTrace();
         }
         return coordinates;

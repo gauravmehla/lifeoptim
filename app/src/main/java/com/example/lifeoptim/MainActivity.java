@@ -69,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_authentication_page);
 
+        this.findViewById(R.id.biometric_img).setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               biometricPrompt();
+           }
+       });
+
+
         // Make sure we have permissions
         if(permissionCheck()) {
 
@@ -79,37 +87,7 @@ public class MainActivity extends AppCompatActivity {
              * Calendar Integration
              */
             CalEvents calendars = new CalEvents(this);
-//            calendars.showCalendarIDs();
-//
-//            @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//            df.setTimeZone(TimeZone.getTimeZone("America/Vancouver"));
-//            try {
-//                String day = "2022-11-20";
-//                Long stTimestamp = df.parse(day + "T00:00:00.000").getTime();
-//                Long endTimestamp = df.parse(day + "T23:59:59.999").getTime();
-//
-//                Log.d("->", stTimestamp + " - " + endTimestamp);
-//
-//                calendars.fetchCalEvents(17, stTimestamp, endTimestamp);
-//
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-
-            calendars.showCalendarIDs();
             calendars.fetchCalendars();
-            //getCalendarEvents(this);
-
-            /*
-             * Weather Integration
-             */
-//            try {
-//                WeatherAPI.get();
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
-//            goTo();
 
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -161,10 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
 
-                Log.d("=-=>Going home screen^", "");
                 // Proceed to Home Activity
                 goTo();
-
             }
 
             @Override
@@ -179,13 +155,10 @@ public class MainActivity extends AppCompatActivity {
                 .setDeviceCredentialAllowed(true)
                 .build();
 
-
-        Log.d(">>", "Asking biometric");
         biometricPrompt.authenticate(promptInfo);
     }
 
     public void goTo() {
-        Log.d("=-=>home screen", "");
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
     }

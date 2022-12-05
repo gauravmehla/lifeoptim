@@ -22,7 +22,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/biometric_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="50dp"
