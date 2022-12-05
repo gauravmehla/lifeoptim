@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -43,6 +44,8 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void setEvents(ArrayList<ArrayList<String>> events) {
+
+        this.events.clear();
         this.events = events;
     }
 
@@ -62,6 +65,7 @@ public class HomeScreen extends AppCompatActivity {
 
     LocationService locS;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,64 +112,126 @@ public class HomeScreen extends AppCompatActivity {
             spinnerCalList.setAdapter(arrayAdapter);
 
         } else {
-            // Calendar is selected
-            Log.d("=-=>", "Proceeeed");
-            setContentView(R.layout.layout_home);
 
-            // Update date
-            formatCurrentDate();
-            // Update the text on home screen
-            String username = getData("currentUser");
-            TextView welcomeUser = findViewById(R.id.text_welcome_user2);
-            welcomeUser.setText("Hello, " + username);
+            mainLayout(0);
+//            // Calendar is selected
+//            Log.d("=-=>", "Proceeeed");
+//            setContentView(R.layout.layout_home);
+//            // Update date
+//            formatCurrentDate();
+//            // Update the text on home screen
+//            String username = getData("currentUser");
+//            TextView welcomeUser = findViewById(R.id.text_welcome_user2);
+//            welcomeUser.setText("Hello, " + username);
+//
+//
+//            // get current calendar ID
+//            String selectedCalendar = getData("selectedCalendar");
+//
+//            for(String calID: CalEvents.calendarsList.keySet()) {
+//                HashMap<String, String> cal = CalEvents.calendarsList.get(calID);
+//                String name = cal.get("name");
+//
+//                if(name.equals(selectedCalendar)) {
+//                    calendarID = Integer.parseInt(calID);
+//                }
+//            }
+//
+//            Log.d("123",calendarID + " " + selectedCalendar);
+//
+//            long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+//            long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+//
+//            try {
+//                setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Log.d("-event->","dsd");
+//            for(int i = 0 ; i < events.size(); ++i){
+//                if(i == 0){
+//                    for(int j = 0 ; j < events.get(i).size(); ++j){
+//                        Log.d("#event ", events.get(i).get(j));
+//                    }
+//                }
+//                if(i == 1){
+//                    for(int j = 0 ; j < events.get(i).size(); ++j){
+//                        Log.d("#loc ", events.get(i).get(j));
+//                    }
+//                }
+//            }
+//
+//            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rView);
+//            adapter = new PlaceEvent(events);
+//            recyclerView.setHasFixedSize(true);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//            recyclerView.setAdapter(adapter);
+//            /* Calendar */
+
+        }
+
+    }
+
+    public void mainLayout(int id){
+        // Calendar is selected
+        setContentView(R.layout.layout_home);
+        Log.d("=-=>", "Proceeeed");
+        // Update date
+        formatCurrentDate();
+        // Update the text on home screen
+        String username = getData("currentUser");
+        TextView welcomeUser = findViewById(R.id.text_welcome_user2);
+        welcomeUser.setText("Hello, " + username);
 
 
-            // get current calendar ID
-            String selectedCalendar = getData("selectedCalendar");
+        // get current calendar ID
+        String selectedCalendar = getData("selectedCalendar");
 
-            for(String calID: CalEvents.calendarsList.keySet()) {
-                HashMap<String, String> cal = CalEvents.calendarsList.get(calID);
-                String name = cal.get("name");
+        for(String calID: CalEvents.calendarsList.keySet()) {
+            HashMap<String, String> cal = CalEvents.calendarsList.get(calID);
+            String name = cal.get("name");
 
-                if(name.equals(selectedCalendar)) {
-                    calendarID = Integer.parseInt(calID);
+            if(name.equals(selectedCalendar)) {
+                calendarID = Integer.parseInt(calID);
+            }
+        }
+
+        Log.d("123",calendarID + " " + selectedCalendar);
+
+        long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+        long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
+
+        try {
+            setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("-event->","dsd");
+        for(int i = 0 ; i < events.size(); ++i){
+            if(i == 0){
+                for(int j = 0 ; j < events.get(i).size(); ++j){
+                    Log.d("#event ", events.get(i).get(j));
                 }
             }
-
-            Log.d("123",calendarID + " " + selectedCalendar);
-
-            long startTime = Cal.getDayStartTimestampInMilli(selectedYear, selectedMonth, selectedDay);
-            long endTime = Cal.getDayEndTimestampInMilli(selectedYear, selectedMonth, selectedDay);
-
-            try {
-                setEvents(Cal.fetchCalEvents(calendarID,startTime,endTime));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            Log.d("-event->","dsd");
-            for(int i = 0 ; i < events.size(); ++i){
-                if(i == 0){
-                    for(int j = 0 ; j < events.get(i).size(); ++j){
-                        Log.d("#event ", events.get(i).get(j));
-                    }
-                }
-                if(i == 1){
-                    for(int j = 0 ; j < events.get(i).size(); ++j){
-                        Log.d("#loc ", events.get(i).get(j));
-                    }
+            if(i == 1){
+                for(int j = 0 ; j < events.get(i).size(); ++j){
+                    Log.d("#loc ", events.get(i).get(j));
                 }
             }
+        }
+        if(id == 0){
 
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rView);
             adapter = new PlaceEvent(events);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
-            /* Calendar */
-
         }
-
+        else if(id == 1){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void onClickDate(View V){
@@ -186,10 +252,12 @@ public class HomeScreen extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapter.notifyDataSetChanged();
-
                 // Update date
-                formatCurrentDate();
+//                formatCurrentDate();
+//                adapter.notifyItemChanged();
+//                adapter.notifyDataSetChanged();
+                  mainLayout(0);
+
 
             }
         }, selectedYear, selectedMonth, selectedDay);
@@ -217,20 +285,11 @@ public class HomeScreen extends AppCompatActivity {
         String username = inputUserName.getText().toString();
         dbManager.update("currentUser", username);
 
-
         Log.d("<>", "Inserting data calValue " + calValue);
         Log.d("<>", "Inserting data InputUserName " + username);
 
-
-        setContentView(R.layout.layout_home);
-
-        // Update the text on home screen
-        TextView welcomeUser = findViewById(R.id.text_welcome_user2);
-        welcomeUser.setText("Hello, " + username);
-
-        adapter.notifyDataSetChanged();
-
-
+        Intent i = new Intent(this,HomeScreen.class);
+        startActivity(i);
     }
 
     // Currently implementing
@@ -269,9 +328,11 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void goHome(View V){
+        Log.d("*going to home", "");
 
-        finish();
-        startActivity(getIntent());
+        mainLayout(0);
+//        setContentView(R.layout.layout_home);
+
     }
     public void goProfile(View V){
         setContentView(R.layout.layout_profile);
@@ -283,7 +344,7 @@ public class HomeScreen extends AppCompatActivity {
         String connectedGmail = getData("selectedCalendar");
         TextView selectedMail = findViewById(R.id.text_connected_gmail);
         selectedMail.setText(connectedGmail);
-
+        Log.d("*going to profile", "");
         if(LocationService.isGPSEnabled()) {
             TextView currentLoc = findViewById(R.id.currentLocation);
             currentLoc.setText(locS.getCurrentLocation());

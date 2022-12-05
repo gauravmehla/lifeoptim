@@ -207,7 +207,7 @@ public class CalEvents {
             for(i = 0 ; i < extremeWeathers.length; i++) {
 //                Log.d("#Hourly", data.size() + "");
                 for (String d : data) {
-                    Log.d("##weather", d + " " + location);
+//                    Log.d("##weather", d + " " + location);
                     if (d.equalsIgnoreCase(extremeWeathers[i])) {
                         Log.d("sugg Extreme Weather", extremeWeathers[i] + " " + weatherSuggestion.get(extremeWeathers[i]));
                         temp = weatherSuggestion.getOrDefault(extremeWeathers[i], "Clear Weather");
@@ -216,6 +216,7 @@ public class CalEvents {
                             Log.d("sugg added",temp);
                             suggestions.add(temp);
                             flag = 1;
+                            i = extremeWeathers.length - 1;
                         }
 //                        break;
                     }

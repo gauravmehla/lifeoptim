@@ -83,12 +83,16 @@ public class WeatherAPI {
                     }
                 }
             });
-        try{
 
-            Thread.sleep(3000);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+            while(data.size() <  48){
+                try{
+                    Thread.sleep(100);
+                }catch (Exception e){
+                       e.printStackTrace();
+                  }
+//                Log.d("#---<","Loading....");
+            }
+
         Log.d("#weather size", data.size() + "");
 
         return data;

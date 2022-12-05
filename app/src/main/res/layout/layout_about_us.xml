@@ -106,14 +106,13 @@
         android:layout_marginRight="20dp"
         android:backgroundTint="#FFFFFF"
         android:ems="10"
-        android:hint="Name"
+        android:hint="Enter your name"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:outlineSpotShadowColor="#FFFFFF"
         android:shadowColor="#FFFFFF"
-        android:text="Roronoa Zoro"
         android:textColor="#FFFFFF"
-        android:textColorHint="#A8FFFFFF"
+        android:textColorHint="#ABFFFFFF"
         android:textSize="20sp" />
 
     <TextView
@@ -141,6 +140,7 @@
         android:layout_width="100dp"
         android:layout_height="73dp"
         android:layout_gravity="bottom|right"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#00000000"
         android:contentDescription="next"

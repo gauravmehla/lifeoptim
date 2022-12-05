@@ -93,8 +93,8 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
         holder.event_suggestion.setText(suggestion);
         holder.event_title.setText(event_title);
-        holder.event_start.setText(event_start);
-        holder.event_end.setText(event_end);
+        holder.event_start.setText(event_start.split(" ")[1].split("\\.00")[0]);
+        holder.event_end.setText(event_end.split(" ")[1].split("\\.00")[0]);
         holder.event_loc.setText(event_loc);
 
     }
