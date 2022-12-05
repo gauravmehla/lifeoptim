@@ -59,7 +59,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
         Log.d("#suggestions", "" + event_data.get(4).get(position) + position);
 
         if(!event_data.get(4).get(position).isEmpty()){
-            suggestion = event_data.get(4).get(0);
+            suggestion = event_data.get(4).get(position);
             holder.event_suggestion.setVisibility(View.VISIBLE);
             flag = 1;
         }
@@ -93,8 +93,8 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
         holder.event_suggestion.setText(suggestion);
         holder.event_title.setText(event_title);
-        holder.event_start.setText(event_start);
-        holder.event_end.setText(event_end);
+        holder.event_start.setText(event_start.split(" ")[1].split("\\.00")[0]);
+        holder.event_end.setText(event_end.split(" ")[1].split("\\.00")[0]);
         holder.event_loc.setText(event_loc);
 
     }
