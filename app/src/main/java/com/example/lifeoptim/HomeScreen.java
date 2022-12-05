@@ -310,7 +310,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     // Update events to today
-    public void changeDateToToday() throws JSONException {
+    public void changeDateToToday(View v) throws JSONException {
         selectedDay = c.get(Calendar.DAY_OF_MONTH);
         selectedMonth = c.get(Calendar.MONTH);
         selectedYear = c.get(Calendar.YEAR);

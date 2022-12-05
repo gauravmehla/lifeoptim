@@ -58,16 +58,16 @@ public class MainActivity extends AppCompatActivity {
     BiometricPrompt.PromptInfo promptInfo;
     LinearLayout mMainLayout;
 
-    public static ArrayList<String> nameOfEvent = new ArrayList<String>();
-    public static ArrayList<String> startDates = new ArrayList<String>();
-    public static ArrayList<String> endDates = new ArrayList<String>();
-    public static ArrayList<String> descriptions = new ArrayList<String>();
+    CalEvents calendars;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_authentication_page);
+
+        // Initialize Calendar
+        calendars = new CalEvents(this);
 
         this.findViewById(R.id.biometric_img).setOnClickListener(new View.OnClickListener() {
            @Override
@@ -82,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
             // Ask for biometric
              biometricPrompt();
-
-            /*
-             * Calendar Integration
-             */
-            CalEvents calendars = new CalEvents(this);
-            calendars.fetchCalendars();
 
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -140,7 +134,18 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
 
                 // Proceed to Home Activity
-                goTo();
+                if(permissionCheck()) {
+                    /*
+                     * Calendar Integration
+                     */
+                    calendars.fetchCalendars();
+
+                    goTo();
+                } else {
+                    Toast.makeText(getApplicationContext(),"Permission Denied",Toast.LENGTH_SHORT).show();
+
+                    quitApplication();
+                }
             }
 
             @Override
