@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> endDates = new ArrayList<String>();
     public static ArrayList<String> descriptions = new ArrayList<String>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         if(permissionCheck()) {
 
             // Ask for biometric
-            // biometricPrompt();
+             biometricPrompt();
 
             /*
              * Calendar Integration
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 
-            goTo();
+//            goTo();
 
         } else {
             Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getApplicationContext(),"Login Success",Toast.LENGTH_SHORT).show();
 
-
+                Log.d("=-=>Going home screen^", "");
                 // Proceed to Home Activity
                 goTo();
 
@@ -184,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goTo() {
+        Log.d("=-=>home screen", "");
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
     }

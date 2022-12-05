@@ -17,7 +17,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
 
     public static ArrayList<ArrayList<String>> event_data = new ArrayList<ArrayList<String>>();
 
-
+    int flag = 0;
     // constructor
     public PlaceEvent(ArrayList<ArrayList<String>> data) {
         this.event_data = data;
@@ -30,6 +30,8 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
         public TextView event_loc;
         public TextView event_start;
         public TextView event_end;
+        public TextView event_suggestion;
+
         public int image;
 
         public ViewHolder(View itemView) {
@@ -39,6 +41,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
             this.event_start = (TextView) itemView.findViewById(R.id.text_start_date);
             this.event_end = (TextView) itemView.findViewById(R.id.text_end_date);
             this.event_loc = (TextView) itemView.findViewById(R.id.text_event_location);
+            this.event_suggestion = (TextView) itemView.findViewById(R.id.text_suggestion);
 
         }
     }
@@ -52,6 +55,18 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
     }
 
     public void onBindViewHolder(ViewHolder holder, int position) {
+        String suggestion = "";
+        Log.d("#suggestions", "" + event_data.get(4).get(position) + position);
+
+        if(!event_data.get(4).get(position).isEmpty()){
+            suggestion = event_data.get(4).get(0);
+            holder.event_suggestion.setVisibility(View.VISIBLE);
+            flag = 1;
+        }
+        else{
+            holder.event_suggestion.setVisibility(View.INVISIBLE);
+        }
+
 
         Log.d("#23 - 0", position + "");
         Log.d("#23 - -1", event_data.size() + "");
@@ -76,6 +91,7 @@ public class PlaceEvent extends RecyclerView.Adapter <PlaceEvent.ViewHolder> {
         Log.d("#bh event_e", event_end);
         Log.d("#bh event_loc", event_loc);
 
+        holder.event_suggestion.setText(suggestion);
         holder.event_title.setText(event_title);
         holder.event_start.setText(event_start);
         holder.event_end.setText(event_end);

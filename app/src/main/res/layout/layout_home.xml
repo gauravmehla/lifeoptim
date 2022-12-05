@@ -58,7 +58,7 @@
             android:layout_width="79dp"
             android:layout_height="80dp"
             android:contentDescription="Select Date"
-            android:onClick="goProfile"
+            android:onClick="onClickDate"
             android:scaleX="0.5"
             android:scaleY="0.5"
             app:srcCompat="@drawable/date_picker" />
