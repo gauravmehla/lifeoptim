@@ -77,15 +77,8 @@ public class MainActivity extends AppCompatActivity {
        });
 
 
-        // Make sure we have permissions
-        if(permissionCheck()) {
-
-            // Ask for biometric
-             biometricPrompt();
-
-        } else {
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
+        // Ask for biometric
+         biometricPrompt();
 
     }
 
@@ -125,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
 
-                quitApplication();
+//                quitApplication();
             }
 
             @Override

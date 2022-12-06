@@ -42,15 +42,14 @@ public class CalEvents {
 
 
         // Default values for suggestion
-        weatherSuggestion.put("Possible Drizzle", "ADVISORY : CARRY UMBRELLA");
-        weatherSuggestion.put("Overcast", "ADVISORY : WINTER JACKET");
-        weatherSuggestion.put("Rainy", "ALERT : CARRY UMBRELLA");
-        weatherSuggestion.put("Snow", "ALERT : WINTER JACKET AND GLOVES");
-        weatherSuggestion.put("Possible Light Rain", "ALERT : CARRY UMBRELLA");
-        weatherSuggestion.put("Possible Light Rain", "ALERT : CARRY UMBRELLA");
+        weatherSuggestion.put("Possible Drizzle", "It's advised to carry umbrella before leaving because there is possibility of drizzling.");
+        weatherSuggestion.put("Overcast", "It's advised to take winter jacket before leaving.");
+        weatherSuggestion.put("Rainy", "It's advised to carry umbrella before leaving because there are chances of rain.");
+        weatherSuggestion.put("Snow", "Remember to carry winter jacket and gloves. There will be snow outside.");
+        weatherSuggestion.put("Possible Light Rain", "Possibility of light rain. Remember to carry umbrella.");
         weatherSuggestion.put("PartlyCloudy", "It's gonna be partly cloudy.");
         weatherSuggestion.put("MostlyCloudy", "It's gonna be mostly cloudy.");
-        weatherSuggestion.put("High Winds", "ALERT : BRING JACKET");
+        weatherSuggestion.put("High Winds", "High winds. Remember to take a jacket.");
     }
 
     public void fetchCalendars() {
@@ -183,6 +182,10 @@ public class CalEvents {
 
         JSONArray weatherHourlyData  = WeatherAPI.get(coordinates[0],coordinates[1]);
 
+        /*
+        * For now, we are selecting the weather using a random function. We can comment this block
+        * as soon as the weather API is up.
+         */
         for (int x = 1; x < weatherHourlyData.length(); x++) {
             final int random = new Random().nextInt(48);
             if(random%2 == 0) {
