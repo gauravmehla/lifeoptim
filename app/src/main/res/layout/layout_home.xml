@@ -41,8 +41,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="50dp"
             android:layout_weight="2"
-            android:background="#03030303"
-            android:backgroundTint="#020202"
+            android:background="#03FF0000"
+            android:backgroundTint="#7E7E7E"
             android:backgroundTintMode="src_over"
             android:onClick="changeDateToToday"
             android:text="TODAY"
@@ -58,7 +58,7 @@
             android:layout_width="79dp"
             android:layout_height="80dp"
             android:contentDescription="Select Date"
-            android:onClick="onClickDate"
+            android:onClick="showPopUpCalendar"
             android:scaleX="0.5"
             android:scaleY="0.5"
             app:srcCompat="@drawable/date_picker" />
@@ -76,13 +76,14 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rView"
         android:layout_width="match_parent"
-        android:layout_height="550dp">
+        android:layout_height="450dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
@@ -90,7 +91,7 @@
             android:id="@+id/btn_home"
             android:layout_width="98dp"
             android:layout_height="87dp"
-            android:alpha="0.5"
+            android:alpha="1"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="home button"
             android:elevation="10dp"
@@ -102,6 +103,7 @@
             android:id="@+id/btn_profile"
             android:layout_width="112dp"
             android:layout_height="87dp"
+            android:alpha="0.5"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="profile button"
             android:elevation="10dp"

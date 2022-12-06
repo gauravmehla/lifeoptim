@@ -32,6 +32,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_about_us.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/layout/layout_authentication_page.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/layout_event.xml" value="0.18802083333333333" />
         <entry key="app/src/main/res/layout/layout_home.xml" value="0.19427083333333334" />
         <entry key="app/src/main/res/layout/layout_profile.xml" value="0.19427083333333334" />
       </map>
